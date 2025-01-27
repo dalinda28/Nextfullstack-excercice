@@ -1,3 +1,7 @@
+import PathnameBreadcrumb from "@/components/comp-452";
+import { Header } from "@/components/navigation/header";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -24,11 +28,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={cn(
+          "h-full bg-background font-sans antialiased mx-auto max-w-4xl px-4 border-x border-accent",
+          geistSans.variable,
+          geistMono.variable
+        )}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+
+          <main className="mt-4 lg:mt-6 flex flex-col gap-4">
+            <PathnameBreadcrumb />
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );
