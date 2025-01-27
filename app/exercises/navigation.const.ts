@@ -11,6 +11,10 @@ export const NAVIGATION = [
         title: "Routing with params",
         path: "2.params-routing",
       },
+      {
+        title: "Server Components",
+        path: "3.server-components",
+      },
     ],
   },
 ];

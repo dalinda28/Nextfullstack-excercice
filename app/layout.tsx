@@ -1,4 +1,4 @@
-import PathnameBreadcrumb from "@/components/comp-452";
+import PathnameBreadcrumb from "@/components/navigation/pathname-breadcrumb";
 import { Header } from "@/components/navigation/header";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { cn } from "@/lib/utils";
