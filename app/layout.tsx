@@ -31,7 +31,7 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <body
         className={cn(
-          "h-full bg-background font-sans antialiased mx-auto max-w-4xl px-4 border-x border-accent",
+          "h-full bg-background font-sans antialiased",
           geistSans.variable,
           geistMono.variable
         )}
@@ -42,12 +42,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
+          <div className="min-h-full mx-auto max-w-4xl px-4 border-x border-accent">
+            <Header />
 
-          <main className="mt-4 lg:mt-6 flex flex-col gap-4">
-            <PathnameBreadcrumb />
-            {children}
-          </main>
+            <main className="mt-4 lg:mt-6 flex flex-col gap-4">
+              <PathnameBreadcrumb />
+              {children}
+            </main>
+          </div>
         </ThemeProvider>
       </body>
     </html>
