@@ -1,7 +1,17 @@
 import { LinkCard } from "@/components/navigation/link-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { NAVIGATION } from "../../navigation.const";
 
 export default async function RoutePage() {
+  const section = NAVIGATION.find(
+    (section) => section.path === "m1-fundamentals"
+  );
+  const lesson = section?.items.find((item) => item.path === "1.routing");
+
+  if (!section || !lesson) {
+    return null;
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -10,12 +20,14 @@ export default async function RoutePage() {
       <CardContent>
         <ul className="flex flex-col gap-2 lg:gap-4">
           <LinkCard
-            href="/exercises/m1-fundamentals/routing/code"
-            text="Exercise"
+            key={lesson.path}
+            text="Code"
+            href={`/exercises/${section.path}/${lesson.path}/code`}
           />
           <LinkCard
-            href="/exercises/m1-fundamentals/routing/final"
+            key={lesson.path}
             text="Solution"
+            href={`/exercises/${section.path}/${lesson.path}/final`}
           />
         </ul>
       </CardContent>
