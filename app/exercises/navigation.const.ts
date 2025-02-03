@@ -15,6 +15,14 @@ export const NAVIGATION = [
         title: "Server Components",
         path: "3.server-components",
       },
+      {
+        title: "Client Components",
+        path: "4.client-components",
+      },
+      {
+        title: "Route Handler",
+        path: "5.route-handler",
+      },
     ],
   },
 ];
