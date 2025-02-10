@@ -1,13 +1,15 @@
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
+import { PropsWithChildren } from "react";
 
-export function LinkCard({ href, text }: { href: string; text: string }) {
+export function LinkCard({
+  href,
+  children,
+}: PropsWithChildren<{ href: string }>) {
   return (
     <li>
       <Link href={href}>
-        <Card className="p-4 hover:bg-accent transition">
-          <p>{text}</p>
-        </Card>
+        <Card className="p-4 hover:bg-accent transition">{children}</Card>
       </Link>
     </li>
   );

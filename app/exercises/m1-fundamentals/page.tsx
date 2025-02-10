@@ -18,8 +18,9 @@ export default async function RoutePage() {
             <LinkCard
               key={item.path}
               href={`/exercises/${section.path}/${item.path}`}
-              text={item.title}
-            />
+            >
+              {item.title}
+            </LinkCard>
           ))}
         </ul>
       </CardContent>

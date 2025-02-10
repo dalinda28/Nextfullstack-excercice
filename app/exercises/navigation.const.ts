@@ -23,6 +23,10 @@ export const NAVIGATION = [
         title: "Route Handler",
         path: "5.route-handler",
       },
+      {
+        title: "Static",
+        path: "6.static",
+      },
     ],
   },
 ];
