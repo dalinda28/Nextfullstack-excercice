@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { PAGES } from "../../data.const";
 
 export default async function RoutePage(props: {
@@ -16,7 +17,7 @@ export default async function RoutePage(props: {
   const page = PAGES.find((page) => page.slug === params.slug);
 
   if (!page) {
-    return null;
+    notFound();
   }
 
   return (

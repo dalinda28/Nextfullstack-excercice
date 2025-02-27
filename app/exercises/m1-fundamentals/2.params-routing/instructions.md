@@ -7,3 +7,7 @@ Il faudrait ensuite afficher une carte qui affiche :
 1. Le slug (titre de la librairie)
 2. La description de la librairie
 3. Un lien pour aller sur la page de la librairie
+
+Tu peux aussi rajouter une page [not-found.js](https://nextjs.org/docs/app/api-reference/file-conventions/not-found) dans le cas où la page n'est pas trouvée.
+
+De cette manière, si l'utilisateur va sur un slug qui n'existe pas, on affiche aussi une erreur.
