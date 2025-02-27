@@ -1,5 +1,5 @@
-import PathnameBreadcrumb from "@/components/navigation/pathname-breadcrumb";
 import { Header } from "@/components/navigation/header";
+import PathnameBreadcrumb from "@/components/navigation/pathname-breadcrumb";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full" suppressHydrationWarning>
       <body
         className={cn(
           "h-full bg-background font-sans antialiased",

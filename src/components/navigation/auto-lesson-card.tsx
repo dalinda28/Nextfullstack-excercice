@@ -31,21 +31,19 @@ export const AutoNavigationCard = () => {
               {section?.title} - {lesson?.title}
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <ul className="flex flex-col gap-2 lg:gap-4">
-              <LinkCard
-                key={lesson.path}
-                href={`/exercises/${section.path}/${lesson.path}/code`}
-              >
-                Code
-              </LinkCard>
-              <LinkCard
-                key={lesson.path}
-                href={`/exercises/${section.path}/${lesson.path}/final`}
-              >
-                Solution
-              </LinkCard>
-            </ul>
+          <CardContent className="flex flex-col gap-2 lg:gap-4">
+            <LinkCard
+              key={lesson.path}
+              href={`/exercises/${section.path}/${lesson.path}/code`}
+            >
+              Code
+            </LinkCard>
+            <LinkCard
+              key={lesson.path}
+              href={`/exercises/${section.path}/${lesson.path}/final`}
+            >
+              Solution
+            </LinkCard>
           </CardContent>
         </Card>
       </div>

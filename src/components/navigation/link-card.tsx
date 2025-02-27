@@ -7,10 +7,8 @@ export function LinkCard({
   children,
 }: PropsWithChildren<{ href: string }>) {
   return (
-    <li>
-      <Link href={href}>
-        <Card className="p-4 hover:bg-accent transition">{children}</Card>
-      </Link>
-    </li>
+    <Link href={href}>
+      <Card className="p-4 hover:bg-accent transition">{children}</Card>
+    </Link>
   );
 }
