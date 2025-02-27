@@ -8,11 +8,6 @@ import { LinkCard } from "./link-card";
 export const AutoNavigationCard = () => {
   const pathname = usePathname().split("/");
 
-  console.log({
-    length: pathname.length,
-    split: pathname,
-  });
-
   if (pathname.length === 4) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_1, _2, sectionPath, lessonPath] = pathname;
@@ -32,16 +27,10 @@ export const AutoNavigationCard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-2 lg:gap-4">
-            <LinkCard
-              key={lesson.path}
-              href={`/exercises/${section.path}/${lesson.path}/code`}
-            >
+            <LinkCard href={`/exercises/${section.path}/${lesson.path}/code`}>
               Code
             </LinkCard>
-            <LinkCard
-              key={lesson.path}
-              href={`/exercises/${section.path}/${lesson.path}/final`}
-            >
+            <LinkCard href={`/exercises/${section.path}/${lesson.path}/final`}>
               Solution
             </LinkCard>
           </CardContent>
@@ -67,9 +56,9 @@ export const AutoNavigationCard = () => {
           </CardHeader>
           <CardContent>
             <ul className="flex flex-col gap-2 lg:gap-4">
-              {section.items.map((item) => (
+              {section.items.map((item, i) => (
                 <LinkCard
-                  key={item.path}
+                  key={item.path + i}
                   href={`/exercises/${section.path}/${item.path}`}
                 >
                   {item.title}
@@ -84,8 +73,8 @@ export const AutoNavigationCard = () => {
 
   return (
     <div>
-      {NAVIGATION.map((section) => (
-        <LinkCard key={section.path} href={`/exercises/${section.path}`}>
+      {NAVIGATION.map((section, i) => (
+        <LinkCard key={section.path + i} href={`/exercises/${section.path}`}>
           {section.title}
         </LinkCard>
       ))}
