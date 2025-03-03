@@ -13,6 +13,7 @@ export const ListSearch = (props: ListSearchProps) => {
   const filteredItems = props.items.filter((item) =>
     item.toLowerCase().includes(search.toLowerCase())
   );
+  console.log("Render With Filter", { search });
   return (
     <div className="w-full">
       <Label>

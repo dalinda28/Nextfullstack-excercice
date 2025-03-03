@@ -2,11 +2,11 @@ Tu dois récupérer les données de cette API :
 
 - https://jsonplaceholder.typicode.com/users
 
-Tu dois afficher une liste avec chacun des users. Il faut être capable de cliquer sur cette liste pour arriver sur une URL `/[userId]` dans laqeul tu vas pouvoir récupérer: .
+Tu dois afficher une liste avec chacun des users. Il faut être capable de cliquer sur cette liste pour arriver sur une URL `/[userId]` dans laquelle tu vas pouvoir récupérer :
 
 - https://jsonplaceholder.typicode.com/users/:userId
 
-Et afficher d'autre informations sur l'utilisateur.
+Et afficher d'autres informations sur l'utilisateur.
 
 Attention :
 
