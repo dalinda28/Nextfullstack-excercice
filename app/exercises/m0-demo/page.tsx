@@ -4,9 +4,7 @@ import { getNavigations } from "../navigation.const";
 
 export default async function RoutePage() {
   const navigation = await getNavigations();
-  const section = navigation.find(
-    (section) => section.path === "m1-fundamentals"
-  );
+  const section = navigation.find((section) => section.path === "m0-demo");
 
   if (!section) {
     return null;
