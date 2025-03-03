@@ -13,7 +13,7 @@ export default async function RoutePage() {
         {users.map((user: any) => (
           <li>
             <Link
-              href={`/exercises/m1-fundamentals/3.server-components/code/${user.id}`}
+              href={`/exercises/m1-fundamentals/3.server-components/final/${user.id}`}
               className="text-indigo-500 hover:underline"
             >
               {user.name}
