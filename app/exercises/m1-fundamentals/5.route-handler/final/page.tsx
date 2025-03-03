@@ -7,55 +7,38 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function RoutePage() {
-  const [items, setItems] = useState<{ name: string; id: number }[]>([]);
+  const [list, setList] = useState<{ id: number; name: string }[]>([]);
   const pathname = usePathname();
 
+  const refreshItems = () => {
+    fetch(pathname + "/api")
+      .then((res) => res.json())
+      .then(setList);
+  };
+
   useEffect(() => {
-    if (!pathname) {
-      return;
-    }
+    refreshItems();
+  }, []);
 
-    async function fetchData() {
-      const response = await fetch(`${pathname}/api`);
-      const data = await response.json();
-      setItems(data);
-    }
-
-    fetchData();
-  }, [pathname]);
-
-  async function addItem(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const itemName = formData.get("itemName") as string;
-
-    if (!itemName.trim()) {
-      return;
-    }
-
-    const response = await fetch(`${pathname}/api`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name: itemName }),
-    });
-    const newItem = await response.json();
-    setItems((prevItems) => [...prevItems, newItem]);
-    form.reset();
-  }
-
-  async function deleteItem(id: number) {
-    await fetch(`${pathname}/api`, {
+  const deleteItem = async (id: number) => {
+    const result = await fetch(`${pathname}/api/${id}`, {
       method: "DELETE",
+    });
+    const json = await result.json();
+    setList(json);
+  };
+
+  const addItem = async (name: string) => {
+    const result = await fetch(`${pathname}/api`, {
+      method: "POST",
+      body: JSON.stringify({ name }),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id }),
     });
-    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  }
+    const json = await result.json();
+    setList(json);
+  };
 
   return (
     <Card>
@@ -63,28 +46,33 @@ export default function RoutePage() {
         <CardTitle>Item List</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
-          {items.map((item) => (
-            <div
-              key={item.id}
-              className="flex justify-between items-center p-2 border rounded-md"
-            >
-              <span>{item.name}</span>
-              <Button variant="outline" onClick={() => deleteItem(item.id)}>
+        <ul className="flex flex-col gap-2">
+          {list.map((data) => (
+            <li className="border flex items-center justify-between px-4 py-2">
+              <span>{data.name}</span>
+              <Button
+                onClick={() => deleteItem(data.id)}
+                size="sm"
+                variant="ghost"
+              >
                 Delete
               </Button>
-            </div>
+            </li>
           ))}
-          <form className="flex items-center space-x-2 mt-4" onSubmit={addItem}>
-            <Input
-              type="text"
-              name="itemName"
-              placeholder="Enter item name"
-              className="border p-2 rounded-md flex-1"
-            />
-            <Button type="submit">Add Item</Button>
-          </form>
-        </div>
+        </ul>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.currentTarget);
+            const name = formData.get("name") as string;
+            addItem(name);
+            e.currentTarget.reset();
+          }}
+          className="flex items-center gap-2 mt-4"
+        >
+          <Input name="name" />
+          <Button type="submit">Add</Button>
+        </form>
       </CardContent>
     </Card>
   );
