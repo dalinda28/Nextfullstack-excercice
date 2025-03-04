@@ -1,0 +1,23 @@
+---
+description: EXPLAIN how to create PAGE or LAYOUT with correct props
+globs: **/*.tsx
+alwaysApply: true
+---
+## Context
+
+* NextJS help us to create page and layout with `page.tsx` and `layout.tsx`. 
+* This rules enforces how to use them.
+
+## Example
+
+Creating a page with params look like this :
+
+```tsx
+// /app/users/[userId]/page.tsx
+
+export default async function Page(props: { params: Promise<{ userId: string }> }) {
+  const params = await props.params;
+
+  return <p>params {params.userId}</p>
+}
+```

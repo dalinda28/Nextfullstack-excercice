@@ -28,6 +28,7 @@ export async function getNavigations(): Promise<NavigationItem[]> {
     const moduleDir = path.join(exercisesDir, moduleEntry.name);
     const moduleEntries = await readdir(moduleDir, { withFileTypes: true });
 
+    // Find all directories that are lessons (start with a number)
     const lessons = moduleEntries.filter(
       (entry) => entry.isDirectory() && /^\d+\./.test(entry.name)
     );
@@ -42,15 +43,38 @@ export async function getNavigations(): Promise<NavigationItem[]> {
     const moduleItem: NavigationItem = {
       title: `M${moduleNumber} - ${capitalizeFirstLetter(moduleName)}`,
       path: moduleEntry.name,
-      items: lessons.map((lesson) => {
-        const lessonNameParts = lesson.name.split(".").slice(1);
-        const lessonName = lessonNameParts.join(".").replace(/-/g, " ");
+      items: await Promise.all(
+        lessons.map(async (lesson) => {
+          const lessonNameParts = lesson.name.split(".").slice(1);
+          const lessonName = lessonNameParts.join(".").replace(/-/g, " ");
 
-        return {
-          title: capitalizeFirstLetter(lessonName),
-          path: lesson.name,
-        };
-      }),
+          // Check if this lesson has any final-* variants
+          const lessonDir = path.join(moduleDir, lesson.name);
+          const lessonEntries = await readdir(lessonDir, {
+            withFileTypes: true,
+          });
+
+          // Find all final-* directories
+          const finalVariants = lessonEntries.filter(
+            (entry) => entry.isDirectory() && entry.name.startsWith("final-")
+          );
+
+          const lessonItem: NavigationItem = {
+            title: capitalizeFirstLetter(lessonName),
+            path: lesson.name,
+          };
+
+          // Add final variants as subitems if they exist
+          if (finalVariants.length > 0) {
+            lessonItem.items = finalVariants.map((variant) => ({
+              title: `Solution ${variant.name.replace("final-", "")}`,
+              path: variant.name,
+            }));
+          }
+
+          return lessonItem;
+        })
+      ),
     };
 
     navigation.push(moduleItem);

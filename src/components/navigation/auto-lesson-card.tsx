@@ -37,6 +37,14 @@ export const AutoNavigationCard = ({
             <LinkCard href={`/exercises/${section.path}/${lesson.path}/final`}>
               Solution
             </LinkCard>
+            {lesson.items?.map((variant, i) => (
+              <LinkCard
+                key={variant.path + i}
+                href={`/exercises/${section.path}/${lesson.path}/${variant.path}`}
+              >
+                {variant.title}
+              </LinkCard>
+            ))}
           </CardContent>
         </Card>
       </div>
@@ -76,7 +84,7 @@ export const AutoNavigationCard = ({
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-2 lg:gap-4">
       {navigation.map((section, i) => (
         <LinkCard key={section.path + i} href={`/exercises/${section.path}`}>
           {section.title}
