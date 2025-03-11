@@ -7,8 +7,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { requiredAuth } from "@/lib/auth-helper";
+import { getRequiredAuth } from "@/lib/auth-helper";
 import { getCurrentExerciseUrl } from "@/lib/current-exercises-url";
 import { prisma } from "@/lib/prisma";
 import { Edit } from "lucide-react";
@@ -20,7 +21,7 @@ export default async function ProjectPage({
 }: {
   params: { projectId: string };
 }) {
-  const user = await requiredAuth();
+  const user = await getRequiredAuth();
   const projectId = params.projectId;
   const currentUrl = await getCurrentExerciseUrl();
 
@@ -68,9 +69,7 @@ export default async function ProjectPage({
         <CardContent>
           <form action={updateProject} className="space-y-4">
             <div className="space-y-2">
-              <label htmlFor="name" className="text-sm font-medium">
-                Project Name
-              </label>
+              <Label htmlFor="name">Project Name</Label>
               <Input
                 id="name"
                 name="name"
@@ -80,9 +79,7 @@ export default async function ProjectPage({
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="description" className="text-sm font-medium">
-                Description
-              </label>
+              <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
                 name="description"

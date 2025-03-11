@@ -1,19 +1,17 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import NextAuth from "next-auth";
-import Resend from "next-auth/providers/resend";
+import { betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { nextCookies } from "better-auth/next-js";
 import { prisma } from "./prisma";
 
-export const {
-  handlers,
-  auth: baseAuth,
-  signIn,
-  signOut,
-} = NextAuth({
-  adapter: PrismaAdapter(prisma),
-  providers: [
-    Resend({
-      apiKey: process.env.RESEND_API_KEY,
-      from: "hello@resend.dev",
-    }),
+export const auth = betterAuth({
+  database: prismaAdapter(prisma, {
+    provider: "postgresql",
+  }),
+  emailAndPassword: {
+    enabled: true,
+  },
+  plugins: [
+    // Always last plugin
+    nextCookies(),
   ],
 });

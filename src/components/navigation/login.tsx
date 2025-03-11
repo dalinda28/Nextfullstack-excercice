@@ -1,6 +1,8 @@
-import { signIn, signOut } from "@/lib/auth";
-import { auth } from "@/lib/auth-helper";
+import { auth } from "@/lib/auth";
+import { getUser } from "@/lib/auth-helper";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { LoadingButton } from "../form/loading-button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -19,7 +21,7 @@ import {
 import { Input } from "../ui/input";
 
 export async function AuthButton() {
-  const user = await auth();
+  const user = await getUser();
 
   if (user) {
     return (
@@ -44,7 +46,9 @@ export async function AuthButton() {
               <form
                 action={async () => {
                   "use server";
-                  await signOut();
+                  await auth.api.signOut({
+                    headers: await headers(),
+                  });
                   redirect("/exercises");
                 }}
               >
@@ -67,14 +71,22 @@ export async function AuthButton() {
           <DialogTitle>Sign in</DialogTitle>
         </DialogHeader>
         <form
-          className="flex gap-2"
+          className="flex gap-2 flex-col"
           action={async (formData) => {
             "use server";
-            await signIn("resend", formData);
+
+            await auth.api.signInEmail({
+              body: {
+                password: formData.get("password") as string,
+                email: formData.get("email") as string,
+              },
+              headers: await headers(),
+            });
           }}
         >
           <Input type="text" name="email" placeholder="Email" />
-          <Button type="submit">Signin</Button>
+          <Input type="password" name="password" placeholder="Password" />
+          <LoadingButton type="submit">Sign In</LoadingButton>
         </form>
       </DialogContent>
     </Dialog>

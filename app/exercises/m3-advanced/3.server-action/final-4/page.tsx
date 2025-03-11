@@ -1,5 +1,5 @@
+import { LoadingButton } from "@/components/form/loading-button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -56,19 +56,40 @@ export default async function ProjectsPage() {
           {projects.length > 0 ? (
             <div className="grid gap-4">
               {projects.map((project) => (
-                <Link
-                  href={`${currentUrl}/projects/${project.id}`}
-                  key={project.id}
-                >
-                  <Card className="overflow-hidden border-l-4 border-l-primary hover:bg-muted/50 transition-colors">
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold text-lg">{project.name}</h3>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        {project.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </Link>
+                <div key={project.id} className="flex items-center gap-2">
+                  <Link
+                    href={`${currentUrl}/projects/${project.id}`}
+                    className="flex-1"
+                  >
+                    <Card className="border-l-4 border-l-primary hover:bg-muted/50 transition-colors">
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-lg">
+                          {project.name}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {project.description}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                  <form>
+                    <LoadingButton
+                      formAction={async () => {
+                        "use server";
+
+                        await prisma.project.delete({
+                          where: { id: project.id, userId: user.id },
+                        });
+
+                        revalidatePath(`${currentUrl}`);
+                      }}
+                      type="submit"
+                      variant="destructive"
+                    >
+                      X
+                    </LoadingButton>
+                  </form>
+                </div>
               ))}
             </div>
           ) : (
@@ -112,9 +133,9 @@ export default async function ProjectsPage() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full">
+            <LoadingButton type="submit" className="w-full">
               Create Project
-            </Button>
+            </LoadingButton>
           </form>
         </CardContent>
       </Card>

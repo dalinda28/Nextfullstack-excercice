@@ -1,18 +1,20 @@
-import { User } from "@prisma/client";
+import { headers } from "next/headers";
 import { unauthorized } from "next/navigation";
-import { baseAuth } from "./auth";
+import { auth } from "./auth";
 
-export const auth = async () => {
-  const session = await baseAuth();
+export const getUser = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   if (!session) {
     return undefined;
   }
-  return session.user as User;
+  return session.user;
 };
 
-export const requiredAuth = async () => {
-  const user = await auth();
+export const getRequiredAuth = async () => {
+  const user = await getUser();
   if (!user) {
     unauthorized();
   }

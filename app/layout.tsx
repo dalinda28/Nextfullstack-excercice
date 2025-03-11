@@ -4,7 +4,9 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Toaster } from "sonner";
 import "./globals.css";
+import Providers from "./providers";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,21 +38,24 @@ export default function RootLayout({
           geistMono.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="min-h-full mx-auto max-w-4xl px-4 border-x border-accent">
-            <Header />
+        <Providers>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="min-h-full mx-auto max-w-4xl px-4 border-x border-accent">
+              <Header />
 
-            <main className="mt-4 lg:mt-6 flex flex-col gap-4">
-              <PathnameBreadcrumb />
-              {children}
-            </main>
-          </div>
-        </ThemeProvider>
+              <main className="mt-4 lg:mt-6 flex flex-col gap-4">
+                <PathnameBreadcrumb />
+                {children}
+              </main>
+            </div>
+            <Toaster />
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

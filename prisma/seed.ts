@@ -26,12 +26,16 @@ async function main() {
   for (let i = 0; i < 3; i++) {
     const firstName = faker.person.firstName();
     const lastName = faker.person.lastName();
+    const now = new Date();
 
     const user = await prisma.user.create({
       data: {
         name: `${firstName} ${lastName}`,
         email: faker.internet.email({ firstName, lastName }),
         image: faker.image.avatar(),
+        emailVerified: true,
+        createdAt: now,
+        updatedAt: now,
       },
     });
 

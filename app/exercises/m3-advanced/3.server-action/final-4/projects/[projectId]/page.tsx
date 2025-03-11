@@ -10,6 +10,7 @@ import { prisma } from "@/lib/prisma";
 import { Edit } from "lucide-react";
 import { notFound } from "next/navigation";
 import { ProjectForm } from "./project-form";
+import { TasksList } from "./tasks-list";
 
 export default async function ProjectPage({
   params,
@@ -23,6 +24,9 @@ export default async function ProjectPage({
     where: {
       id: projectId,
       userId: user.id,
+    },
+    include: {
+      tasks: true,
     },
   });
 
@@ -42,6 +46,14 @@ export default async function ProjectPage({
         </CardHeader>
         <CardContent>
           <ProjectForm project={project} />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Tasks</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <TasksList projectId={projectId} tasks={project.tasks} />
         </CardContent>
       </Card>
     </div>
