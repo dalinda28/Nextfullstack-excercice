@@ -1,4 +1,4 @@
-import { getUser } from "@/lib/auth-helper";
+import { getUser } from "@/lib/auth-session";
 import { createSafeActionClient } from "next-safe-action";
 
 class SafeActionError extends Error {

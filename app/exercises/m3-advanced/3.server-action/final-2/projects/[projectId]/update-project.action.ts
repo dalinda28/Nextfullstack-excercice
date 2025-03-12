@@ -1,6 +1,6 @@
 "use server";
 
-import { getRequiredAuth } from "@/lib/auth-helper";
+import { getRequiredAuth } from "@/lib/auth-session";
 import { verifyBadWord } from "@/lib/bad-words";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";

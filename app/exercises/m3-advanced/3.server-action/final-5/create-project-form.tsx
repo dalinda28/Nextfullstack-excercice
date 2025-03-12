@@ -4,30 +4,31 @@ import { LoadingButton } from "@/components/form/loading-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
 import { toast } from "sonner";
 import { createProjectAction } from "./project.action";
 
 export const CreateProjectForm = () => {
-  const [isPending, startTransition] = useTransition();
   const router = useRouter();
+
+  const { execute, isPending } = useAction(createProjectAction, {
+    onSuccess: () => {
+      toast.success("Project created");
+      router.refresh();
+    },
+    onError: (error) => {
+      toast.error(error.error.serverError);
+    },
+  });
 
   const createProject = (formData: FormData) => {
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
 
-    startTransition(async () => {
-      const result = await createProjectAction({
-        name,
-        description,
-      });
-
-      if (result?.serverError) {
-        toast.error(result?.serverError);
-      }
-
-      router.refresh();
+    execute({
+      name,
+      description,
     });
   };
 

@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getRequiredAuth } from "@/lib/auth-helper";
+import { getRequiredAuth } from "@/lib/auth-session";
 import { prisma } from "@/lib/prisma";
 import { Edit } from "lucide-react";
 import { notFound } from "next/navigation";

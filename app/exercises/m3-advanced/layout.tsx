@@ -1,4 +1,4 @@
-import { AuthButton } from "@/components/navigation/login";
+import { AuthButton } from "@/components/navigation/auth-button";
 import { PropsWithChildren } from "react";
 
 export default async function LayoutPage(props: PropsWithChildren) {

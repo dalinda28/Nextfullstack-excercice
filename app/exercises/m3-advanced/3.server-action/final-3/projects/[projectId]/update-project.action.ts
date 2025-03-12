@@ -1,6 +1,6 @@
 "use server";
 
-import { getRequiredAuth } from "@/lib/auth-helper";
+import { getRequiredAuth } from "@/lib/auth-session";
 import { prisma } from "@/lib/prisma";
 
 export const updateProjectAction = async (

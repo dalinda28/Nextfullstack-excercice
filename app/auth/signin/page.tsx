@@ -24,37 +24,36 @@ export default function SignUpPage() {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    authClient.signUp.email(
+    const event = {
+      onRequest: () => {
+        setIsLoading(true);
+      },
+      onSuccess: () => {
+        router.push("/auth");
+        router.refresh();
+      },
+      onError: (ctx: { error: { message: string } }) => {
+        toast.error(ctx.error.message);
+        setIsLoading(false);
+      },
+    };
+
+    authClient.signIn.email(
       {
         email,
-        name,
         password,
-        callbackURL: "/auth",
       },
-      {
-        onRequest: () => {
-          setIsLoading(true);
-        },
-        onSuccess: () => {
-          router.push("/auth");
-          router.refresh();
-        },
-        onError: (ctx) => {
-          toast.error(ctx.error.message);
-          setIsLoading(false);
-        },
-      }
+      event
     );
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Sign up</CardTitle>
+        <CardTitle>Sign in</CardTitle>
         <CardDescription>
           We just need a few details to get you started.
         </CardDescription>
@@ -63,16 +62,6 @@ export default function SignUpPage() {
       <CardContent className="space-y-6">
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div className="space-y-4">
-            <div className="*:not-first:mt-2">
-              <Label htmlFor={`name`}>Full name</Label>
-              <Input
-                id={`name`}
-                placeholder="Matt Welsh"
-                type="text"
-                required
-                name="name"
-              />
-            </div>
             <div className="*:not-first:mt-2">
               <Label htmlFor={`email`}>Email</Label>
               <Input
@@ -83,6 +72,7 @@ export default function SignUpPage() {
                 name="email"
               />
             </div>
+
             <div className="*:not-first:mt-2">
               <Label htmlFor={`password`}>Password</Label>
               <Input
@@ -95,14 +85,14 @@ export default function SignUpPage() {
             </div>
           </div>
           <Button disabled={isLoading} type="submit" className="w-full">
-            Sign up
+            Sign in
           </Button>
         </form>
 
         <p className="text-muted-foreground text-center text-xs">
-          Already have an account?{" "}
-          <Link className="text-indigo-500" href="/auth/signin">
-            Sing In.
+          No account ?{" "}
+          <Link className="text-indigo-500" href="/auth/signup">
+            Sing Up
           </Link>
         </p>
       </CardContent>

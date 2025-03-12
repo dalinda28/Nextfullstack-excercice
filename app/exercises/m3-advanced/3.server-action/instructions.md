@@ -65,4 +65,4 @@ De cette manière on va créer 2 clients :
 
 Tu peux aussi utiliser [`handleServerError`](https://next-safe-action.dev/docs/define-actions/create-the-client#handleservererror) afin d'avoir une custom erreur.
 
-Une fois que tu as fait tout ça, tu peux créer un fichier `create-project-form` qui va appeler cette server-action en utilisant [`useTransition`](https://react.dev/reference/rsc/server-functions#server-functions-with-actions).
+Une fois que tu as fait tout ça, tu peux créer un fichier `create-project-form` qui va appeler cette server-action en utilisant [`useAction`](https://next-safe-action.dev/docs/execute-actions/hooks/useaction).

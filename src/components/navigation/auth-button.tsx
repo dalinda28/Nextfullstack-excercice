@@ -1,24 +1,16 @@
 import { auth } from "@/lib/auth";
-import { getUser } from "@/lib/auth-helper";
+import { getUser } from "@/lib/auth-session";
 import { headers } from "next/headers";
+import Link from "next/link";
 import { redirect } from "next/navigation";
-import { LoadingButton } from "../form/loading-button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+import { Button, buttonVariants } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Input } from "../ui/input";
 
 export async function AuthButton() {
   const user = await getUser();
@@ -62,33 +54,11 @@ export async function AuthButton() {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>Sign In</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Sign in</DialogTitle>
-        </DialogHeader>
-        <form
-          className="flex gap-2 flex-col"
-          action={async (formData) => {
-            "use server";
-
-            await auth.api.signInEmail({
-              body: {
-                password: formData.get("password") as string,
-                email: formData.get("email") as string,
-              },
-              headers: await headers(),
-            });
-          }}
-        >
-          <Input type="text" name="email" placeholder="Email" />
-          <Input type="password" name="password" placeholder="Password" />
-          <LoadingButton type="submit">Sign In</LoadingButton>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <Link
+      href="/auth/signin"
+      className={buttonVariants({ size: "sm", variant: "outline" })}
+    >
+      Sign in
+    </Link>
   );
 }

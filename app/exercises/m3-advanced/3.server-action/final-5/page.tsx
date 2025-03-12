@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getRequiredAuth } from "@/lib/auth-helper";
+import { getRequiredAuth } from "@/lib/auth-session";
 import { getCurrentExerciseUrl } from "@/lib/current-exercises-url";
 import { prisma } from "@/lib/prisma";
 import { AlertCircle, ClipboardList, PlusCircle } from "lucide-react";
