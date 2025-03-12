@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { auth } from "@/lib/auth";
-import { getUser } from "@/lib/auth-session";
+import { getRequiredAuth } from "@/lib/auth-session";
 import { headers } from "next/headers";
 
 export default async function AuthPage() {
-  const user = await getUser();
+  const user = await getRequiredAuth();
   const accounts = await auth.api.listUserAccounts({
     headers: await headers(),
   });
@@ -19,7 +19,39 @@ export default async function AuthPage() {
           <CardTitle>Auth</CardTitle>
         </CardHeader>
         <CardContent>
-          <pre>{JSON.stringify(user, null, 2)}</pre>
+          <div className="space-y-4">
+            <div className="flex items-center gap-4">
+              {user.image && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={user.image}
+                  alt={user.name || "User"}
+                  className="h-16 w-16 rounded-full"
+                />
+              )}
+              <div>
+                <h3 className="text-lg font-semibold">
+                  {user.name || "Anonymous User"}
+                </h3>
+                <p className="text-sm text-muted-foreground">{user.email}</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="border rounded-md p-3">
+                <span className="text-muted-foreground">User ID:</span>
+                <p className="font-mono mt-1 break-all">{user.id}</p>
+              </div>
+              {user.createdAt && (
+                <div className="border rounded-md p-3">
+                  <span className="text-muted-foreground">Joined:</span>
+                  <p className="mt-1">
+                    {new Date(user.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
         </CardContent>
       </Card>
       <Card>
