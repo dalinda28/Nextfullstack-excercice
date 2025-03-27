@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { auth } from "@/lib/auth";
-import { getRequiredAuth } from "@/lib/auth-session";
+import { getRequiredUser } from "@/lib/auth-session";
 import { headers } from "next/headers";
 
 export default async function AuthPage() {
-  const user = await getRequiredAuth();
+  const user = await getRequiredUser();
   const accounts = await auth.api.listUserAccounts({
     headers: await headers(),
   });

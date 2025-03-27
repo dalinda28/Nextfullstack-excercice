@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { getRequiredAuth } from "@/lib/auth-session";
+import { getRequiredUser } from "@/lib/auth-session";
 import { getCurrentExerciseUrl } from "@/lib/current-exercises-url";
 import { prisma } from "@/lib/prisma";
 import { Edit } from "lucide-react";
@@ -21,7 +21,7 @@ export default async function ProjectPage({
 }: {
   params: { projectId: string };
 }) {
-  const user = await getRequiredAuth();
+  const user = await getRequiredUser();
   const projectId = params.projectId;
   const currentUrl = await getCurrentExerciseUrl();
 

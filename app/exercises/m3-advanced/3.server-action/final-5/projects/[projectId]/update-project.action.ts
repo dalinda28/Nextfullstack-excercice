@@ -1,13 +1,13 @@
 "use server";
 
-import { getRequiredAuth } from "@/lib/auth-session";
+import { getRequiredUser } from "@/lib/auth-session";
 import { prisma } from "@/lib/prisma";
 
 export const updateProjectAction = async (
   state: { projectId: string; success: boolean; error: string },
   formData: FormData
 ) => {
-  const user = await getRequiredAuth();
+  const user = await getRequiredUser();
   const name = formData.get("name");
   const description = formData.get("description");
 
@@ -35,7 +35,7 @@ export const createTaskAction = async (params: {
 }) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  const user = await getRequiredAuth();
+  const user = await getRequiredUser();
 
   await prisma.task.create({
     data: {
@@ -59,7 +59,7 @@ export const createTaskAction = async (params: {
 export const deleteTaskAction = async (taskId: string) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  const user = await getRequiredAuth();
+  const user = await getRequiredUser();
 
   try {
     await prisma.task.delete({

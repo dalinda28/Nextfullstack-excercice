@@ -1,13 +1,13 @@
 "use server";
 
-import { getRequiredAuth } from "@/lib/auth-session";
+import { getRequiredUser } from "@/lib/auth-session";
 import { prisma } from "@/lib/prisma";
 
 export const updateProjectAction = async (
   state: { projectId: string; success: boolean; error: string },
   formData: FormData
 ) => {
-  const user = await getRequiredAuth();
+  const user = await getRequiredUser();
   const name = formData.get("name");
   const description = formData.get("description");
 

@@ -13,7 +13,7 @@ export const getUser = async () => {
   return session.user;
 };
 
-export const getRequiredAuth = async () => {
+export const getRequiredUser = async () => {
   const user = await getUser();
   if (!user) {
     unauthorized();
