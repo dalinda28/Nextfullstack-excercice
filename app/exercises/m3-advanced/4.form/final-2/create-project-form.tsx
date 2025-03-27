@@ -14,13 +14,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { z } from "zod";
 import { createProjectAction } from "./project.action";
-
-const ProjectFormSchema = z.object({
-  name: z.string().min(1, "Project name is required"),
-  description: z.string().min(1, "Description is required"),
-});
+import { ProjectFormSchema } from "./project.schema";
 
 export const CreateProjectForm = () => {
   const router = useRouter();

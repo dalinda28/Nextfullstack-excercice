@@ -71,7 +71,7 @@ export const AutoNavigationCard = ({
                   key={item.path + i}
                   href={`/exercises/${section.path}/${item.path}`}
                 >
-                  {item.title}
+                  {i + 1}. {item.title}
                 </LinkCard>
               ))}
             </ul>
