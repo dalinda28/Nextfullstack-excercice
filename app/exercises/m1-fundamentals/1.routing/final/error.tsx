@@ -14,15 +14,17 @@ export default function ErrorPage(props: { error: Error; reset: () => void }) {
         <AlertDescription>
           Please refresh the page or try again later.
         </AlertDescription>
-        <Button variant="outline" onClick={props.reset}>
-          Reset
-        </Button>
-        <a
-          href={getCurrentExerciseUrlClient()}
-          className={buttonVariants({ variant: "outline" })}
-        >
-          Remove error
-        </a>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={props.reset}>
+            Reset
+          </Button>
+          <a
+            href={getCurrentExerciseUrlClient().split("?")[0]}
+            className={buttonVariants({ variant: "outline" })}
+          >
+            Remove error
+          </a>
+        </div>
       </div>
     </Alert>
   );
