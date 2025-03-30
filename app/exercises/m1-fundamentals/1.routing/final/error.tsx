@@ -2,7 +2,7 @@
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { getCurrentExerciseUrl } from "@/lib/current-exercises-url";
+import { getCurrentExerciseUrlClient } from "@/lib/current-exercices-url-client";
 import { TriangleAlert } from "lucide-react";
 
 export default function ErrorPage(props: { error: Error; reset: () => void }) {
@@ -18,7 +18,7 @@ export default function ErrorPage(props: { error: Error; reset: () => void }) {
           Reset
         </Button>
         <a
-          href={await getCurrentExerciseUrl()}
+          href={getCurrentExerciseUrlClient()}
           className={buttonVariants({ variant: "outline" })}
         >
           Remove error

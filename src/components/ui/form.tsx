@@ -37,7 +37,6 @@ const Form = <T extends FieldValues>({
   className,
   formClassName,
   disabled,
-
   ...props
 }: FormProps<T>) => {
   return (
@@ -121,6 +120,7 @@ const FormItem = React.forwardRef<
 
   return (
     <FormItemContext.Provider value={{ id }}>
+      <p>Id : {id}</p>
       <div ref={ref} className={cn("space-y-2", className)} {...props} />
     </FormItemContext.Provider>
   );
