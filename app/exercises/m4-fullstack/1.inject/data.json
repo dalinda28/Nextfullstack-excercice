@@ -1,0 +1,37 @@
+[
+  {
+    "slug": "use-state",
+    "title": "Understanding useState",
+    "content": "The useState hook is a fundamental hook in React that allows you to add state to functional components.\n\nIt returns an array with two elements: the current state value and a function to update it.\n\nYou can use it to manage local state in your components."
+  },
+  {
+    "slug": "use-effect",
+    "title": "Understanding useEffect",
+    "content": "The useEffect hook lets you perform side effects in function components.\n\nIt serves the same purpose as componentDidMount, componentDidUpdate, and componentWillUnmount in React classes.\n\nYou can use it to fetch data, set up subscriptions, and manually change the DOM."
+  },
+  {
+    "slug": "use-context",
+    "title": "Understanding useContext",
+    "content": "The useContext hook allows you to access the context value directly in your functional components.\n\nIt makes it easier to share values like themes or user data between components without passing props manually at every level.\n\nYou can use it to simplify the code and avoid prop drilling."
+  },
+  {
+    "slug": "use-reducer",
+    "title": "Understanding useReducer",
+    "content": "The useReducer hook is an alternative to useState for managing complex state logic in React components.\n\nIt is similar to Redux but built into React, allowing you to handle state transitions with a reducer function.\n\nYou can use it to manage state that depends on previous state values."
+  },
+  {
+    "slug": "use-callback",
+    "title": "Understanding useCallback",
+    "content": "The useCallback hook returns a memoized callback function that only changes if one of the dependencies has changed.\n\nIt is useful for optimizing performance by preventing unnecessary re-creations of functions.\n\nYou can use it to pass stable functions to child components."
+  },
+  {
+    "slug": "use-memo",
+    "title": "Understanding useMemo",
+    "content": "The useMemo hook returns a memoized value that only recalculates if one of the dependencies has changed.\n\nIt is useful for optimizing performance by preventing expensive calculations on every render.\n\nYou can use it to memoize computed values in your components."
+  },
+  {
+    "slug": "use-ref",
+    "title": "Understanding useRef",
+    "content": "The useRef hook returns a mutable ref object whose .current property is initialized to the passed argument.\n\nIt can be used to access DOM elements directly or to persist values across renders without causing re-renders.\n\nYou can use it to store a reference to a DOM node or any mutable value."
+  }
+]
