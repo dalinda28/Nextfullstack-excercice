@@ -1,0 +1,17 @@
+-- CreateEnum
+CREATE TYPE "EventType" AS ENUM ('PROJECT_CREATED', 'PROJECT_UPDATED', 'PROJECT_DELETED', 'TASK_CREATED', 'TASK_UPDATED', 'TASK_DELETED');
+
+-- CreateTable
+CREATE TABLE "Event" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "data" JSONB NOT NULL,
+    "type" "EventType" NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "Event" ADD CONSTRAINT "Event_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;

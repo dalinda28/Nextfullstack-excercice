@@ -20,6 +20,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   projects      Project[]
+  events        Event[]
 
   @@unique([email])
   @@map("user")
@@ -102,4 +103,24 @@ model Project {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum EventType {
+  PROJECT_CREATED
+  PROJECT_UPDATED
+  PROJECT_DELETED
+  TASK_CREATED
+  TASK_UPDATED
+  TASK_DELETED
+}
+
+model Event {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  relationId String?
+  data       Json
+  type       EventType
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }

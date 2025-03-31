@@ -1,3 +1,4 @@
+import { ProjectCard } from "@/components/features/projects/project-card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +16,8 @@ export default async function ProjectsPage() {
   // 🦁 Remplace pour récupérer la liste des projets
   const projects = [] as { id: string; name: string; description: string }[];
 
+  const currentUrl = await getCurrentExerciseUrl();
+
   return (
     <div className="space-y-6">
       <Card className="w-full">
@@ -29,17 +32,11 @@ export default async function ProjectsPage() {
           {projects.length > 0 ? (
             <div className="grid gap-4">
               {projects.map((project) => (
-                <Card
+                <ProjectCard
                   key={project.id}
-                  className="overflow-hidden border-l-4 border-l-primary"
-                >
-                  <CardContent className="p-4">
-                    <h3 className="font-semibold text-lg">{project.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {project.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                  {...project}
+                  currentUrl={currentUrl}
+                />
               ))}
             </div>
           ) : (

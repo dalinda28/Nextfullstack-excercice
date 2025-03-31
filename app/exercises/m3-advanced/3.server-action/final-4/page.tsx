@@ -1,3 +1,4 @@
+import { ProjectCard } from "@/components/features/projects/project-card";
 import { LoadingButton } from "@/components/form/loading-button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
@@ -15,7 +16,6 @@ import { getCurrentExerciseUrl } from "@/lib/current-exercises-url";
 import { prisma } from "@/lib/prisma";
 import { AlertCircle, ClipboardList, PlusCircle } from "lucide-react";
 import { revalidatePath } from "next/cache";
-import Link from "next/link";
 
 export default async function ProjectsPage() {
   const user = await getRequiredUser();
@@ -57,21 +57,11 @@ export default async function ProjectsPage() {
             <div className="grid gap-4">
               {projects.map((project) => (
                 <div key={project.id} className="flex items-center gap-2">
-                  <Link
-                    href={`${currentUrl}/projects/${project.id}`}
-                    className="flex-1"
-                  >
-                    <Card className="border-l-4 border-l-primary hover:bg-muted/50 transition-colors">
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-lg">
-                          {project.name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {project.description}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </Link>
+                  <ProjectCard
+                    key={project.id}
+                    {...project}
+                    currentUrl={currentUrl}
+                  />
                   <form>
                     <LoadingButton
                       formAction={async () => {

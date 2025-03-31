@@ -1,5 +1,4 @@
 import { ProjectCard } from "@/components/features/projects/project-card";
-import { LoadingButton } from "@/components/form/loading-button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Card,
@@ -11,9 +10,7 @@ import {
 import { getRequiredUser } from "@/lib/auth-session";
 import { getCurrentExerciseUrl } from "@/lib/current-exercises-url";
 import { prisma } from "@/lib/prisma";
-import { AlertCircle, ClipboardList, PlusCircle } from "lucide-react";
-import { revalidatePath } from "next/cache";
-import { CreateProjectForm } from "./create-project-form";
+import { AlertCircle, ClipboardList } from "lucide-react";
 
 export default async function ProjectsPage() {
   const user = await getRequiredUser();
@@ -41,28 +38,7 @@ export default async function ProjectsPage() {
             <div className="grid gap-4">
               {projects.map((project) => (
                 <div key={project.id} className="flex items-center gap-2">
-                  <ProjectCard
-                    key={project.id}
-                    {...project}
-                    currentUrl={currentUrl}
-                  />
-                  <form>
-                    <LoadingButton
-                      formAction={async () => {
-                        "use server";
-
-                        await prisma.project.delete({
-                          where: { id: project.id, userId: user.id },
-                        });
-
-                        revalidatePath(`${currentUrl}`);
-                      }}
-                      type="submit"
-                      variant="destructive"
-                    >
-                      X
-                    </LoadingButton>
-                  </form>
+                  <ProjectCard {...project} currentUrl={currentUrl} />
                 </div>
               ))}
             </div>
@@ -76,18 +52,6 @@ export default async function ProjectsPage() {
               </AlertDescription>
             </Alert>
           )}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <PlusCircle className="h-5 w-5 text-primary" />
-            <CardTitle>Create New Project</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <CreateProjectForm />
         </CardContent>
       </Card>
     </div>

@@ -1,6 +1,6 @@
-import { AutoNavigationCard } from "@/components/navigation/auto-lesson-card";
+import { AutoNavigationCardSuspense } from "@/components/navigation/auto-lesson-card-suspense";
 import { getNavigations } from "@app/exercises/navigation.const";
 
 export default async function RoutePage() {
-  return <AutoNavigationCard navigation={await getNavigations()} />;
+  return <AutoNavigationCardSuspense navigation={await getNavigations()} />;
 }
