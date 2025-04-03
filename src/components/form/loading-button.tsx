@@ -9,9 +9,12 @@ export type LoadingButtonProps = ButtonProps & {
   forceLoading?: boolean;
 };
 
-export const LoadingButton = (props: LoadingButtonProps) => {
+export const LoadingButton = ({
+  forceLoading,
+  ...props
+}: LoadingButtonProps) => {
   const { pending } = useFormStatus();
-  const loading = props.forceLoading || pending;
+  const loading = forceLoading || pending;
   return (
     <Button {...props} disabled={loading} className="relative">
       <span
