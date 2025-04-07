@@ -34,6 +34,9 @@ export async function AuthButton() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem asChild>
+              <Link href="/auth">Auth</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <form
                 action={async () => {
