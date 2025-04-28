@@ -1,8 +1,8 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { userAction } from "@/lib/safe-actions";
 import { z } from "zod";
+import { userAction } from "./safe-action";
 
 export const createProjectAction = userAction
   .schema(

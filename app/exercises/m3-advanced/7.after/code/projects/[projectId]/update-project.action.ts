@@ -2,7 +2,9 @@
 
 import { prisma } from "@/lib/prisma";
 import { SafeActionError, userAction } from "@/lib/safe-actions";
+import { waitFor } from "@/lib/wait-for";
 import { EventType } from "@prisma/client";
+import { after } from "next/server";
 import { z } from "zod";
 
 export const updateProjectAction = userAction
@@ -44,27 +46,34 @@ export const updateProjectAction = userAction
     });
 
     // Simulation de latence
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    if (!prevProject) {
-      throw new SafeActionError("Project not found");
-    }
-    await prisma.event.create({
-      data: {
-        type: EventType.PROJECT_UPDATED,
-        userId: user.id,
-        relationId: projectId,
+    after(async () => {
+      console.log("🟠 AFTER RUN !");
+      await waitFor(1000);
+      if (!prevProject) {
+        throw new SafeActionError("Project not found");
+      }
+      await prisma.event.create({
         data: {
-          prev: {
-            name: prevProject?.name,
-            description: prevProject?.description,
-          },
-          new: {
-            name: updatedProject.name,
-            description: updatedProject.description,
+          type: EventType.PROJECT_UPDATED,
+          userId: user.id,
+          relationId: projectId,
+          data: {
+            prev: {
+              name: prevProject?.name,
+              description: prevProject?.description,
+            },
+            new: {
+              name: updatedProject.name,
+              description: updatedProject.description,
+            },
           },
         },
-      },
+      });
+
+      console.log("🟢 AFTER RUN !");
     });
+
+    console.log("🟢 RESPONSE SENT !");
 
     return {
       success: true,
@@ -97,16 +106,18 @@ export const createTaskAction = userAction
       },
     });
 
-    await prisma.event.create({
-      data: {
-        type: EventType.TASK_CREATED,
-        userId: user.id,
-        relationId: task.id,
+    after(async () => {
+      await prisma.event.create({
         data: {
-          prev: {},
-          new: task,
+          type: EventType.TASK_CREATED,
+          userId: user.id,
+          relationId: task.id,
+          data: {
+            prev: {},
+            new: task,
+          },
         },
-      },
+      });
     });
 
     return {
@@ -140,17 +151,19 @@ export const deleteTaskAction = userAction
     });
 
     // Simulation de latence
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    await prisma.event.create({
-      data: {
-        type: EventType.TASK_DELETED,
-        userId: user.id,
-        relationId: taskId,
+    after(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await prisma.event.create({
         data: {
-          prev: task,
-          new: {},
+          type: EventType.TASK_DELETED,
+          userId: user.id,
+          relationId: taskId,
+          data: {
+            prev: task,
+            new: {},
+          },
         },
-      },
+      });
     });
 
     return {

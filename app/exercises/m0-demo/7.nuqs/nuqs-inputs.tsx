@@ -4,14 +4,29 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useQueryState } from "nuqs";
+import { parseAsBoolean, parseAsInteger, useQueryState } from "nuqs";
 
 export const NuqsInputs = () => {
-  const [name, setName] = useQueryState("name");
-  const [age, setAge] = useQueryState("age", { defaultValue: "0" });
-  const [isStudent, setIsStudent] = useQueryState("isStudent", {
-    defaultValue: "false",
+  const [name, setName] = useQueryState("name", {
+    shallow: false,
+    throttleMs: 1000,
   });
+  const [age, setAge] = useQueryState(
+    "age",
+    parseAsInteger.withDefault(0).withOptions({
+      shallow: false,
+      throttleMs: 1000,
+    })
+  );
+  const [isStudent, setIsStudent] = useQueryState(
+    "isStudent",
+    parseAsBoolean.withDefault(false).withOptions({
+      shallow: false,
+      throttleMs: 1000,
+    })
+  );
+
+  console.log({ name, age, isStudent });
 
   return (
     <div className="space-y-8">
@@ -32,27 +47,25 @@ export const NuqsInputs = () => {
           type="number"
           id="age"
           value={age ?? "0"}
-          onChange={(e) => setAge(e.target.value)}
+          onChange={(e) => setAge(Number(e.target.value))}
         />
       </div>
 
       <div className="flex items-center space-x-2">
         <Switch
           id="student-mode"
-          checked={isStudent === "true"}
-          onCheckedChange={(checked: boolean) =>
-            setIsStudent(checked ? "true" : "false")
-          }
+          checked={isStudent}
+          onCheckedChange={(checked: boolean) => setIsStudent(checked)}
         />
         <Label htmlFor="student-mode">Student mode</Label>
       </div>
 
       <Button
-        variant="outline"
+        variant="success"
         onClick={() => {
           setName(null);
-          setAge("0");
-          setIsStudent("false");
+          setAge(0);
+          setIsStudent(false);
         }}
       >
         Reset all

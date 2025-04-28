@@ -1,17 +1,19 @@
+import { getRequiredUser } from "@/lib/auth-session";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
-import { userRoute } from "../../route-client";
+import { routeClient } from "../../route-client";
 
-export const GET = userRoute
+export const GET = routeClient
   .query(
     z.object({
       q: z.coerce.string(),
     })
   )
-  .handler(async (request, { query, ctx }) => {
+  .handler(async (request, { query }) => {
+    const user = await getRequiredUser();
     const projects = await prisma.project.findMany({
       where: {
-        userId: ctx.user.id,
+        userId: user.id,
         ...(query.q && {
           OR: [
             { name: { contains: query.q, mode: "insensitive" } },

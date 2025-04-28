@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
-import { ProjectSelect } from "../../m4-fullstack/4.nuqs/final-2/project-select";
+import { ProjectSelect } from "./project-select";
 
 export default function Page() {
   const [projectId, setProjectId] = useState("");

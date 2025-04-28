@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { userRoute } from "@app/exercises/m3-advanced/5.next-zod-route/final-1/route-client";
+import { userRoute } from "@app/exercises/m3-advanced/5.next-zod-route/final-2/route-client";
 import { z } from "zod";
 
 export const GET = userRoute

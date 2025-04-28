@@ -25,7 +25,6 @@ export const ProjectsList = () => {
   const currentUrl = getCurrentExerciseUrlClient();
 
   useEffect(() => {
-    console.log({ currentUrl });
     const fetchProjects = async () => {
       setIsLoading(true);
       const result = await fetch(
