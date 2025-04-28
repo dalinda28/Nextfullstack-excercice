@@ -18,3 +18,21 @@ Tu vas commencer par afficher la liste en utilisnat la "vieille méthode" de `us
 Puis tu vas créer un formulaire qui permet d'ajouter un élément à la liste.
 
 Et un bouton qui permet de supprimer un élément de la liste.
+
+## Important : usage de `fs`
+
+`fs` est un outil en NodeJS qui permet de lire un fichier (ici data.json) mais surtout d'écrire dans ce même fichier.
+
+Notre métier en tant que développeur est d'utiliser des nouveaux outils au quotidien. Je te laisse faire des recherches sur Google ou ChatGPT pour réussir à écrire et lire ce fichier.
+
+Seul tips, le meilleur moyen de récupérer le path est le suivant :
+
+```ts
+import fs from "fs/promises";
+import path from "path";
+
+const dataPath = path.join(
+  process.cwd(),
+  "/app/exercises/m1-fundamentals/5.route-handler/data.json"
+);
+```
